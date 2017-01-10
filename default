@@ -9,13 +9,10 @@ server {
 
 	charset utf-8;
 
-	# Cambia "el-nombre-de-tu-carpeta-admin" por... ¡el nombre de tu carpeta admin!
-	set $admin_dir /el-nombre-de-tu-carpeta-admin;
-
     	# Controladores Symfony - Sin ésto no funcionan las rutas que gestiona Symfony
-    	location ~ /(international|_profiler|module|product)/(.*)$ {
-      		try_files $uri $uri/ /index.php?q=$uri&$args $admin_dir/index.php$is_args$args;    	
-    	}
+        location ~ /admin(?<carpetaadmin>[a-zA-Z0-9]*)\/.*\/(international|_profiler|module|product)/(.*)$ {
+              try_files $uri $uri/ /index.php?q=$uri&$args /admin$carpetaadmin/index.php$is_args$args;
+        }
     
 	location = /favicon.ico { log_not_found off; access_log off; }
 	location = /robots.txt  { log_not_found off; access_log off; }
